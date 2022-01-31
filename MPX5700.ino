@@ -19,7 +19,7 @@ void tekananSensor(){
   offset = 0; //Adjust until the sensor output reaches 101,325 kPa or 14,69594878 psi or 1 atm
   voltage = 0.0;
   for(int i = 0; i < sampelData; i++){
-    sensorRead = (analogRead(A0) + 0.5) * (5.0 / 1024.0);
+    sensorRead = ((float)analogRead(A0) + 0.5) * (5.0 / 1024.0);
     voltage += sensorRead;
     delay(10);
   }
