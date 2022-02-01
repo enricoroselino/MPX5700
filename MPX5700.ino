@@ -25,9 +25,6 @@ void tekananSensor(){
   }
   voltageMean = (voltage / (float)sampelData) + offset;
   kpa = ((voltageMean - 0.2) / 0.006429);
-  if(kpa <= 0){
-    kpa = 0.0;
-  }
   psi = kpa * 0.14503774;
   atm = kpa * 0.00986923;
   bar = kpa / 100.0;
