@@ -32,6 +32,7 @@ void tekananSensor(){
   atm = kpa * 0.00986923;
   bar = kpa / 100.0;
   mmhg= kpa * 7.501;
+  //printf("Change offset to = %f", abs(0.851418 - voltageMean)); //un-comment to calibrate the sensor to 1 atm
   printf("ADC Voltage = %f", voltageMean);
   printf("\nTekanan = %f kPa atau %f psi atau %f atm atau %f bar atau %f mmhg\n", kpa, psi, atm, bar, mmhg);
 }
