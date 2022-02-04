@@ -15,7 +15,7 @@ void loop() {
 }
 
 void tekananSensor(){
-  float sensorRead, voltageMean,voltage, kpa, psi, atm, bar, mmhg,
+  float sensorRead, voltageMean, voltage, kpa, psi, atm, bar, mmhg,
   offset = 0; //Adjust until the sensor output reaches 101,325 kPa or 14,69594878 psi or 1 atm
   voltage = 0.0;
   for(int i = 0; i < sampelData; i++){
