@@ -1,11 +1,12 @@
 #include <LibPrintf.h>
 
-int sampelData = 10;
+#define sampelData 5
+#define pin A0
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  pinMode(A0, INPUT);
+  pinMode(pin, INPUT);
 }
 
 void loop() {
@@ -15,21 +16,36 @@ void loop() {
 }
 
 void tekananSensor(){
-  float sensorRead, voltageMean, voltage, kpa, psi, atm, bar, mmhg,
-  offset = 0; //Adjust until the sensor output reaches 101,325 kPa or 14,69594878 psi or 1 atm
-  voltage = 0.0;
-  analogRead(A0);
+  /*
+   * Sensor full-scale = 4.7V
+   * Max = 700 KPa
+   * Datasheet formula :
+   * VS = 5V
+   * Vout = VS * (0.0012858*P + 0.04)
+   * Vout = 0.006429*P + 0.2
+   * P = (Vout - 0.2) / 0.006429
+   * Calibration Value :
+   * Vout = (0.006429 * 101.325) + 0.2
+   * Vout = 0.851418425
+   */
+  int sensorRead,
+  fullScale = 4700;
+  float voltageMean, voltageMap, kpa, psi, atm, bar, mmhg,
+  calValue = 0.851418425,
+  offset = 0; //Adjust until the sensor output reaches 101,325 kPa
+  sensorRead = 0;
+  analogRead(pin);
   for(int i = 0; i < sampelData; i++){
-    sensorRead = ((float)analogRead(A0) + 0.5) * (5.0 / 1024.0);
-    voltage += sensorRead;
+    sensorRead += analogRead(pin);
   }
-  voltageMean = (voltage / (float)sampelData) + offset;
-  kpa = ((voltageMean - 0.2) / 0.006429);
+  voltageMean = (sensorRead / (float)sampelData) * (5000.0 / 1024.0);
+  voltageMap = (map((int)round(voltageMean), 0, 5000, 0, fullScale) / 1000.0) + offset;
+  kpa = ((voltageMap - 0.2) / 0.006429);
   psi = kpa * 0.14503774;
   atm = kpa * 0.00986923;
   bar = kpa / 100.0;
   mmhg= kpa * 7.501;
-  //printf("Change offset to = %f", abs(0.851418 - voltageMean)); //un-comment to calibrate the sensor to 1 atm
-  printf("ADC Voltage = %f", voltageMean);
+  //printf("Change offset to = %f", abs(calValue - voltageMap)); //un-comment to calibrate the sensor to 101,325 kPa
+  printf("ADC Voltage = %f", voltageMap);
   printf("\nTekanan = %f kPa atau %f psi atau %f atm atau %f bar atau %f mmhg\n", kpa, psi, atm, bar, mmhg);
 }
