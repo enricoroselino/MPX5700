@@ -1,6 +1,6 @@
 #include <LibPrintf.h>
 
-#define sampelData 5
+#define sampelData 100
 #define pin A0
 
 void setup() {
@@ -44,7 +44,7 @@ void tekananSensor(){
   atm = kpa * 0.00986923;
   bar = kpa / 100.0;
   mmhg= kpa * 7.501;
-  //printf("Change offset to = %f", abs(calValue - voltageMean)); //un-comment to calibrate the sensor to 101,325 kPa
+  //printf("Change offset to = %f \n", abs(calValue - voltageMean)); //un-comment to calibrate the sensor to 101,325 kPa
   printf("ADC Voltage = %f", voltageMean);
   printf("\nTekanan = %f kPa atau %f psi atau %f atm atau %f bar atau %f mmhg\n", kpa, psi, atm, bar, mmhg);
 }
