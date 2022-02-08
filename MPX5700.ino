@@ -23,13 +23,13 @@ void tekananSensor(){
    * Datasheet formula :
    * VS = 5V
    * Vout = VS * (0.0012858*P + 0.04)
-   * Vout = 0.006429*P + 0.2
+   * Vout = 0.006429 * P + 0.2
    * P = (Vout - 0.2) / 0.006429
    * Calibration Value :
    * Vout = (0.006429 * 101.325) + 0.2
    * Vout = 0.851418425
    */
-  int sensorRead;
+  unsigned int sensorRead;
   float voltageMean, kpa, psi, atm, bar, mmhg,
   calValue = 0.851418425,
   offset = 0; //Adjust until the sensor output reaches 101,325 kPa
