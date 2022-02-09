@@ -29,7 +29,7 @@ void tekananSensor(){
    * Vout = (0.006429 * 101.325) + 0.2
    * Vout = 0.851418425
    */
-  unsigned int sensorRead;
+  unsigned long sensorRead;
   float voltageMean, kpa, psi, atm, bar, mmhg,
   calValue = 0.851418425,
   offset = 0; //Adjust until the sensor output reaches 101,325 kPa
